@@ -1,5 +1,5 @@
 import csv
-from Point import *
+from src.models.Point import *
 
 def CSVExport(points, path):
     with open(path, mode='w', newline='') as file:
