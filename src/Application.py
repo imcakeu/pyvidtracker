@@ -1,19 +1,20 @@
-
 import tkinter as tk
+import controllers.Controller as controllerClass
+import models.Video as videoClass
+import views.view as viewClass
 
 class Application(tk.Tk):
-
     def __init__(self):
 
         super().__init__()
         self.title('Video Tracker')
         # create a video model
-        video = Video()
+        video = videoClass.Video()
         # create a view and place it on the root window
-        view = View(self)
+        view = viewClass.View(self)
 
         # create a controller
-        controller = Controller(video, view)
+        controller = controllerClass.Controller(video, view)
 
         # set the controller to view
         view.setController(controller)
