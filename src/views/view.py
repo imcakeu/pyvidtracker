@@ -1,7 +1,7 @@
 import tkinter as tk
 import PIL.Image, PIL.ImageTk
 from tkinter import Tk, Frame, Menu
-import controllers.FileRepo as classFileRepo
+import controllers.fileRepo as classFileRepo
 
 class View(tk.Frame):
 
