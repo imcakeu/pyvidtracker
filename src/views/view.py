@@ -6,12 +6,12 @@ from src.controllers.controller import Controller
 class View(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.initUI()
+        self.initialiseUserInterface()
 
     def setController(self, controller):
         self.controller = controller
 
-    def initUI(self):
+    def initialiseUserInterface(self):
         self.master.title("Video IHM")
 
         menubar = Menu(self.master)
@@ -31,7 +31,7 @@ class View(tk.Frame):
         pointageMenu = Menu(menubar)
         pointageMenu.add_command(label="Sauvegarder en CSV", command = self.onSave)
         menubar.add_cascade(label="Pointage", menu=pointageMenu)
-        
+
     def onSave(self):
         print("Sauvegarder")
         Controller.exporter(Controller)
@@ -44,4 +44,5 @@ def main():
     root = tk()
     root.geometry("250x150+300+300")
     app = View()
+    Controller.videoPlayer(root)
     root.mainloop()

@@ -5,9 +5,8 @@ import cv2
 import os
 
 class VideoPlayer:
-    def __init__(self, window, window_title):
+    def __init__(self, window):
         self.window = window
-        self.window.title(window_title)
         self.canvas = Canvas(window)
         self.canvas.pack()
         self.delay = 15   # ms
