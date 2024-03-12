@@ -4,7 +4,7 @@ import PIL.Image, PIL.ImageTk
 import cv2
 import os
 
-class Application:
+class VideoPlayer:
     def __init__(self, window, window_title):
         self.window = window
         self.window.title(window_title)
@@ -52,4 +52,4 @@ class Application:
 
 
 # Create a window and pass it to videoGUI Class
-Application(Tk(), "Video Tracker")
+# Application(Tk(), "Video Tracker")

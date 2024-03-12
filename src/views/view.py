@@ -1,20 +1,18 @@
 import tkinter as tk
 import PIL.Image, PIL.ImageTk
 from tkinter import Tk, Frame, Menu
-import controllers.fileRepo as classFileRepo
+from src.controllers.controller import Controller
 
 class View(tk.Frame):
-
     def __init__(self, parent):
         super().__init__(parent)
-
         self.initUI()
 
     def setController(self, controller):
         self.controller = controller
 
     def initUI(self):
-        self.master.title("Simple menu")
+        self.master.title("Video IHM")
 
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
@@ -36,7 +34,7 @@ class View(tk.Frame):
         
     def onSave(self):
         print("Sauvegarder")
-        classFileRepo.exporter()
+        Controller.exporter(Controller)
 
 
     def onExit(self):
