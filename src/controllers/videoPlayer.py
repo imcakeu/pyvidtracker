@@ -12,7 +12,39 @@ class VideoPlayer:
         self.delay = 15   # ms
         self.open_file()
         self.play_video()
+        self.controlUserInterface()
         self.window.mainloop()
+
+    def controlUserInterface(self):
+        # Create buttons
+        self.start_button = Button(self.window, text="<<", command=self.start_video)
+        self.start_button.pack(side='left')
+
+        self.play_pause_button = Button(self.window, text="II", command=self.toggle_play_pause)
+        self.play_pause_button.pack(side='left')
+
+        self.end_button = Button(self.window, text=">>", command=self.end_video)
+        self.end_button.pack(side='left')
+
+    def play_pause(self, value):
+        self.pause = value
+        self.play_video()
+        self.play_pause_button.config(text=">" if self.pause else "II")
+
+    def toggle_play_pause(self):
+        self.play_pause(not self.pause)
+
+    def start_video(self):
+        if self.cap.isOpened():
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            self.play_pause(False)
+
+    def end_video(self):
+        if self.cap.isOpened():
+            # Seek to the last frame of the video
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.cap.get(cv2.CAP_PROP_FRAME_COUNT) - 10)
+            # Pause the video
+            self.play_pause(False)
 
     def get_video_file(self, video_name):
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -32,22 +64,22 @@ class VideoPlayer:
         try:
             if self.cap.isOpened():
                 ret, frame = self.cap.read()
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        except:
-            pass
-            # messagebox.showerror(title='Alert', message='End of the video.')
+                if ret:
+                    return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                else:
+                    # Notify play_video method that video has ended
+                    self.pause = True
+                    return (False, None)
+        except Exception as e:
+            print("Error:", e)
+            return (False, None)
 
     def play_video(self):
         # Get a frame from the video source, and go to the next frame automatically
         ret, frame = self.get_frame()
         if ret:
-            # Resize the frame to fit the canvas size
-            frame = cv2.resize(frame, (int(self.width), int(self.height)))
-            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
-
-            # self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            # self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
