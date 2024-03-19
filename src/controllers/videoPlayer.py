@@ -10,7 +10,7 @@ class VideoPlayer:
         self.canvas = Canvas(window)
         self.canvas.pack()
         self.delay = 15   # ms
-        self.open_file()
+        self.open_file("compteur.mp4")
         self.play_video()
         self.controlUserInterface()
         self.window.mainloop()
@@ -51,9 +51,9 @@ class VideoPlayer:
         video_path = os.path.abspath(os.path.join(script_dir, '..', '..', 'resources', 'videos', video_name))
         return video_path
 
-    def open_file(self):
+    def open_file(self, filename):
         self.pause = False
-        self.filename = self.get_video_file("compteur.mp4")
+        self.filename = self.get_video_file(filename)
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)

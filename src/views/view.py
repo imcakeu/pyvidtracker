@@ -17,9 +17,7 @@ class View(tk.Frame):
         self.master.config(menu=menubar)
 
         fileMenu = Menu(menubar)
-        fileMenu.add_command(label="Charger video")
-        fileMenu.add_command(label="Lire video")
-        fileMenu.add_command(label="Quitter", command=self.onExit)
+        fileMenu.add_command(label="Ouvrir une vidéo...", command = self.onLoadVideo)
         menubar.add_cascade(label="Fichier", menu=fileMenu)
 
         scaleMenu = Menu(menubar)
@@ -28,11 +26,15 @@ class View(tk.Frame):
         menubar.add_cascade(label="Echelle", menu=scaleMenu)
         
         pointageMenu = Menu(menubar)
-        pointageMenu.add_command(label="Sauvegarder en CSV", command = self.onSave)
+        pointageMenu.add_command(label="Sauvegarder en CSV...", command = self.onSaveCSV)
         menubar.add_cascade(label="Pointage", menu=pointageMenu)
 
-    def onSave(self):
-        print("Sauvegarder")
+    def onLoadVideo(self):
+        print("Bouton pressé: Ouvrir une video")
+        Controller.open_video(Controller)
+
+    def onSaveCSV(self):
+        print("Bouton pressé: Sauvegarder en CSV")
         Controller.exporter(Controller)
 
     def onExit(self):
