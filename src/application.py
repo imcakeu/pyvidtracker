@@ -7,7 +7,8 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Video IHM')
-        self.geometry("500x150+300+300")
+        self.geometry("640x480+300+300")
+        self.resizable(False, False)
 
         # Views
         view = View(self)

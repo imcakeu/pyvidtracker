@@ -34,14 +34,20 @@ class VideoPlayer:
                 ret, frame = self.cap.read()
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         except:
-            messagebox.showerror(title='Alert', message='End of the video.')
+            pass
+            # messagebox.showerror(title='Alert', message='End of the video.')
 
     def play_video(self):
         # Get a frame from the video source, and go to the next frame automatically
         ret, frame = self.get_frame()
         if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            # Resize the frame to fit the canvas size
+            frame = cv2.resize(frame, (int(self.width), int(self.height)))
+            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
+            self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
+
+            # self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+            # self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
