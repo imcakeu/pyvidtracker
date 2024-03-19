@@ -6,14 +6,13 @@ from controllers.controller import Controller
 class View(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
+        self.parent = parent
         self.initialiseUserInterface()
 
     def setController(self, controller):
         self.controller = controller
 
     def initialiseUserInterface(self):
-        self.master.title("Video IHM")
-
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 

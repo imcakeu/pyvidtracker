@@ -6,7 +6,7 @@ from views.view import View
 class Application(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('Video IHM')
+        self.title('VideoTracker Media Player')
         self.geometry("640x400+300+300")
         self.resizable(False, False)
 
