@@ -1,5 +1,5 @@
 import csv
-from src.models.point import Point
+from models.point import Point
 from tkinter import filedialog
 
 class FileRepo:

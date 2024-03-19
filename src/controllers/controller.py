@@ -1,12 +1,12 @@
 import tkinter as tk
-from src.controllers.fileRepo import FileRepo
-from src.models.point import Point
-from src.controllers.videoPlayer import VideoPlayer
+from controllers.fileRepo import FileRepo
+from models.point import Point
+from controllers.videoPlayer import VideoPlayer
 
 class Controller:
-    def __init__(self, view, videoPlayer):
+    def __init__(self, view):
         self.view = view
-        self.videoPlayer = videoPlayer
+        # self.videoPlayer = videoPlayer
         
     def exporter(self):
         point = Point(12, 34)

@@ -1,7 +1,7 @@
 import tkinter as tk
 import PIL.Image, PIL.ImageTk
 from tkinter import Tk, Frame, Menu
-from src.controllers.controller import Controller
+from controllers.controller import Controller
 
 class View(tk.Frame):
     def __init__(self, parent):
@@ -36,13 +36,5 @@ class View(tk.Frame):
         print("Sauvegarder")
         Controller.exporter(Controller)
 
-
     def onExit(self):
         self.quit()
-
-def main():
-    root = tk()
-    root.geometry("250x150+300+300")
-    app = View()
-    Controller.videoPlayer(root)
-    root.mainloop()

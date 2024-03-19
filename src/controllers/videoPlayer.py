@@ -48,7 +48,3 @@ class VideoPlayer:
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
-
-
-# Create a window and pass it to videoGUI Class
-# Application(Tk(), "Video Tracker")
