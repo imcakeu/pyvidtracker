@@ -1,0 +1,27 @@
+default:
+  tags:
+    - CREMI 
+    - Focal/Fossa
+
+stages:
+  - build
+  - test
+  - coverage
+
+buid-job1:
+  stage: build
+  script :
+    - pip install coverage
+
+test-job1:
+  stage: test
+  script :
+    - python3 -m unittest -v test_videoplayer.py
+
+coverage-job1:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=Application -m pytest test_videoplayer.py
+    - coverage report -m
+
