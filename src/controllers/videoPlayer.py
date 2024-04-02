@@ -19,10 +19,14 @@ class VideoPlayer:
         # Create buttons
         self.start_button = Button(self.window, text="<<", command=self.start_video)
         self.start_button.pack(side='left')
+        self.move_back_button = Button(self.window, text="<", command=self.move_back_frame)
+        self.move_back_button.pack(side='left')
 
         self.play_pause_button = Button(self.window, text="II", command=self.toggle_play_pause)
         self.play_pause_button.pack(side='left')
 
+        self.move_fwd_button = Button(self.window, text=">", command=self.move_fwd_frame)
+        self.move_fwd_button.pack(side='left')
         self.end_button = Button(self.window, text=">>", command=self.end_video)
         self.end_button.pack(side='left')
 
@@ -33,6 +37,21 @@ class VideoPlayer:
 
     def toggle_play_pause(self):
         self.play_pause(not self.pause)
+
+    def move_back_frame(self):
+        self.move_frame(-1)
+
+    def move_fwd_frame(self):
+        self.move_frame(1)
+
+    def move_frame(self, count):
+        print("move_frame: ", count)
+        if self.cap.isOpened():
+            current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+            new_frame = max(0, current_frame + count)
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, new_frame)
+            self.play_pause(True)
+            print("cap is opened")
 
     def start_video(self):
         if self.cap.isOpened():

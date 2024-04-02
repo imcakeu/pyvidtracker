@@ -2,6 +2,7 @@ import tkinter as tk
 import PIL.Image, PIL.ImageTk
 from tkinter import Tk, Frame, Menu
 from controllers.controller import Controller
+import sys
 
 class View(tk.Frame):
     def __init__(self, parent):
@@ -18,6 +19,7 @@ class View(tk.Frame):
 
         fileMenu = Menu(menubar)
         fileMenu.add_command(label="Ouvrir une vidéo...", command = self.onLoadVideo)
+        fileMenu.add_command(label="Quitter", command = self.onExit)
         menubar.add_cascade(label="Fichier", menu=fileMenu)
 
         scaleMenu = Menu(menubar)
@@ -38,4 +40,4 @@ class View(tk.Frame):
         Controller.exporter(Controller)
 
     def onExit(self):
-        self.quit()
+        sys.exit("User has quit successfully")
