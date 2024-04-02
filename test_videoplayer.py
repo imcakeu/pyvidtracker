@@ -1,4 +1,5 @@
 import unittest
+from src.application import Application
 
 class test_videoplayer(unittest.TestCase):
     def setUp(self) -> None:
