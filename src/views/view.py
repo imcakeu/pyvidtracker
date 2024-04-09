@@ -9,8 +9,10 @@ class View(tk.Frame):
         super().__init__(parent)
         self.parent = parent
         self.initialiseUserInterface()
+        self.controller = None
 
     def setController(self, controller):
+        print("Controller:", controller)
         self.controller = controller
 
     def initialiseUserInterface(self):
@@ -33,11 +35,11 @@ class View(tk.Frame):
 
     def onLoadVideo(self):
         print("Bouton pressé: Ouvrir une video")
-        Controller.open_video(Controller)
+        self.controller.open_video()
 
     def onSaveCSV(self):
         print("Bouton pressé: Sauvegarder en CSV")
-        Controller.exporter(Controller)
+        self.controller.exporter()
 
     def onExit(self):
         sys.exit("User has quit successfully")

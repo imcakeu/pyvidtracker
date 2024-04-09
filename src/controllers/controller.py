@@ -5,8 +5,10 @@ from controllers.videoPlayer import VideoPlayer
 from tkinter import filedialog
 
 class Controller:
-    def __init__(self, view):
+    def __init__(self, parent, view):
+        self.parent = parent
         self.view = view
+        self.videoPlayer = VideoPlayer(self.parent, "default")
 
     def save_file(self):
         file_path = filedialog.asksaveasfilename()
@@ -15,10 +17,10 @@ class Controller:
             return(file_path)
 
     def open_file(self):
-        file_path = filedialog.askopenfile()
+        file_path = filedialog.askopenfilename()
         if file_path:
             print("Opening File: ", file_path)
-            return(file_path)
+            return file_path
         
     def exporter(self):
         point = Point(12, 34)
@@ -29,4 +31,6 @@ class Controller:
         FileRepo.CSVExport(FileRepo, myPoints, self.save_file(self))
 
     def open_video(self):
-        VideoPlayer.open_file(VideoPlayer, self.open_file(self))
+        file_path = self.open_file()
+        if file_path:
+            self.videoPlayer = VideoPlayer(self.parent, file_path)

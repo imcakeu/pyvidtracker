@@ -11,14 +11,13 @@ class Application(tk.Tk):
         self.resizable(False, False)
 
         # Views
-        view = View(self)
+        self.view = View(self)
 
         # Controllers
-        videoPlayer = VideoPlayer(self)
-        controller = Controller(view)
+        self.controller = Controller(self, self.view)
 
         # set the controller to view
-        view.setController(controller)
+        self.view.setController(self.controller)
         
 
 if __name__ == '__main__':

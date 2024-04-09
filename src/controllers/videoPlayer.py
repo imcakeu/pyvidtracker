@@ -5,15 +5,18 @@ import cv2
 import os
 
 class VideoPlayer:
-    def __init__(self, window):
+    def __init__(self, window, video_file):
         self.window = window
         self.canvas = Canvas(window)
         self.canvas.pack()
         self.delay = 15   # ms
-        self.open_file("compteur.mp4")
+        if video_file == "default":
+            self.open_file(self.get_video_file("compteur.mp4"))
+        else:
+            self.open_file(video_file)
         self.play_video()
         self.controlUserInterface()
-        self.window.mainloop()
+        # self.window.mainloop()
 
     def controlUserInterface(self):
         # Create buttons
@@ -45,13 +48,11 @@ class VideoPlayer:
         self.move_frame(1)
 
     def move_frame(self, count):
-        print("move_frame: ", count)
         if self.cap.isOpened():
             current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
             new_frame = max(0, current_frame + count)
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, new_frame)
             self.play_pause(True)
-            print("cap is opened")
 
     def start_video(self):
         if self.cap.isOpened():
@@ -72,8 +73,8 @@ class VideoPlayer:
 
     def open_file(self, filename):
         self.pause = False
-        self.filename = self.get_video_file(filename)
-        print(self.filename)
+        self.filename = filename
+        print("Reading video:", self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
