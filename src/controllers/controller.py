@@ -34,3 +34,4 @@ class Controller:
         file_path = self.open_file()
         if file_path:
             self.videoPlayer = VideoPlayer(self.parent, file_path)
+            self.parent.refresh_view()

@@ -16,6 +16,7 @@ class VideoPlayer:
             self.open_file(video_file)
         self.play_video()
         self.controlUserInterface()
+        self.toggle_play_pause()
         # self.window.mainloop()
 
     def controlUserInterface(self):
@@ -57,7 +58,7 @@ class VideoPlayer:
     def start_video(self):
         if self.cap.isOpened():
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            self.play_pause(False)
+            self.toggle_play_pause()
 
     def end_video(self):
         if self.cap.isOpened():

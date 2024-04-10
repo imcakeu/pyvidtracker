@@ -24,13 +24,10 @@ class View(tk.Frame):
         fileMenu.add_command(label="Quitter", command = self.onExit)
         menubar.add_cascade(label="Fichier", menu=fileMenu)
 
-        scaleMenu = Menu(menubar)
-        scaleMenu.add_command(label="Creer une nouvelle Echelle")
-        scaleMenu.add_command(label="Activer l'affichage de l'Echelle")
-        menubar.add_cascade(label="Echelle", menu=scaleMenu)
-        
         pointageMenu = Menu(menubar)
-        pointageMenu.add_command(label="Sauvegarder en CSV...", command = self.onSaveCSV)
+        pointageMenu.add_command(label="Créer une nouvelle échelle")
+        pointageMenu.add_command(label="Activer l'affichage de l'échelle")
+        pointageMenu.add_command(label="Sauvegarder les données en CSV...", command = self.onSaveCSV)
         menubar.add_cascade(label="Pointage", menu=pointageMenu)
 
     def onLoadVideo(self):
