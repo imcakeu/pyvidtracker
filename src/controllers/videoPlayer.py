@@ -5,7 +5,8 @@ import cv2
 import os
 
 class VideoPlayer:
-    def __init__(self, window, video_file):
+    def __init__(self, controller, window, video_file):
+        self.controller = controller
         self.window = window
         self.canvas = Canvas(window)
         self.canvas.pack()
@@ -15,29 +16,13 @@ class VideoPlayer:
         else:
             self.open_file(video_file)
         self.play_video()
-        self.controlUserInterface()
-        self.toggle_play_pause()
+        # self.toggle_play_pause()
         # self.window.mainloop()
-
-    def controlUserInterface(self):
-        # Create buttons
-        self.start_button = Button(self.window, text="<<", command=self.start_video)
-        self.start_button.pack(side='left')
-        self.move_back_button = Button(self.window, text="<", command=self.move_back_frame)
-        self.move_back_button.pack(side='left')
-
-        self.play_pause_button = Button(self.window, text="II", command=self.toggle_play_pause)
-        self.play_pause_button.pack(side='left')
-
-        self.move_fwd_button = Button(self.window, text=">", command=self.move_fwd_frame)
-        self.move_fwd_button.pack(side='left')
-        self.end_button = Button(self.window, text=">>", command=self.end_video)
-        self.end_button.pack(side='left')
 
     def play_pause(self, value):
         self.pause = value
         self.play_video()
-        self.play_pause_button.config(text=">" if self.pause else "II")
+        self.controller.view.play_pause_button.config(text=">" if self.pause else "II")
 
     def toggle_play_pause(self):
         self.play_pause(not self.pause)

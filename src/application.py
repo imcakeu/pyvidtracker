@@ -2,7 +2,6 @@ import tkinter as tk
 from controllers.controller import Controller
 from controllers.videoPlayer import VideoPlayer
 from views.view import View
-
 class Application(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -10,15 +9,16 @@ class Application(tk.Tk):
         self.geometry("640x400+300+300")
         self.resizable(False, False)
 
-        # Views
         self.view = View(self)
+        self.controller = Controller(self, self.view, "default")
 
-        # Controllers
-        self.controller = Controller(self, self.view)
+    def new_player(self, file_name):
+        self.destroy()  # Destroy the main application window
+        self.pack_forget()
+        self.grid_forget()
+        self.__init__()  # Recreate the application with a new instance
+        self.controller = Controller(self, self.view, file_name)
 
-        # set the controller to view
-        self.view.setController(self.controller)
-        
 
 if __name__ == '__main__':
     app = Application()

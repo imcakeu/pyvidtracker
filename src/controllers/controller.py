@@ -5,10 +5,12 @@ from controllers.videoPlayer import VideoPlayer
 from tkinter import filedialog
 
 class Controller:
-    def __init__(self, parent, view):
+    def __init__(self, parent, view, file_name):
         self.parent = parent
+        self.videoPlayer = VideoPlayer(self, self.parent, file_name)
         self.view = view
-        self.videoPlayer = VideoPlayer(self.parent, "default")
+        self.view.setController(self)
+        self.view.userinterface_videocontrol()
 
     def save_file(self):
         file_path = filedialog.asksaveasfilename()
@@ -33,5 +35,4 @@ class Controller:
     def open_video(self):
         file_path = self.open_file()
         if file_path:
-            self.videoPlayer = VideoPlayer(self.parent, file_path)
-            self.parent.refresh_view()
+            self.parent.new_player(file_path)
