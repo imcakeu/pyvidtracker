@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append("./src")
 import unittest
 from controllers.fileRepo import FileRepo
 from models.point import Point
