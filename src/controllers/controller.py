@@ -53,7 +53,7 @@ class Controller:
             self.parent.error_handler("Aucune donnée à sauvegarder")
             return
 
-        path = self.save_file(self)
+        path = self.save_file()
         FileRepo.CSVExport(FileRepo, self.pointage_data, path)
 
     def open_video(self):
