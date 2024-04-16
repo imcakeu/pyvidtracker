@@ -26,6 +26,10 @@ class Application(tk.Tk):
         self.destroy()
         self.__init__(self.file_name, not self.is_pointage)
 
+    def error_handler(self, error):
+        print("ERROR:", error)
+        tk.messagebox.showerror(self.parent.title, error)
+
 
 if __name__ == '__main__':
     app = Application()
