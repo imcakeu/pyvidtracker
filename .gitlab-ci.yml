@@ -16,4 +16,4 @@ buid-job1:
 test-job1:
   stage: test
   script :
-    - python3 -m unittest -v src/test/tests.py
+    - python3 -m unittest -v test/tests.py
