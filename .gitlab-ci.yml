@@ -18,3 +18,10 @@ test-job1:
   script :
     # - python3 -m unittest -v test/tests.py
     - python3 test/tests.py
+
+coverage-job1:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=Application -m pytest test/tests.py
+    - coverage report -m
