@@ -1,8 +1,8 @@
 import sys
 sys.path.append("../")
 import unittest
-from src.controllers.fileRepo import FileRepo
-from src.models.point import Point
+from controllers.fileRepo import FileRepo
+from models.point import Point
 import os
 import random
 
