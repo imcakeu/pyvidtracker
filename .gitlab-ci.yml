@@ -16,12 +16,12 @@ buid-job1:
 test-job1:
   stage: test
   script :
-    - python3 -m unittest -v test_videoplayer.py
+    - python3 -m unittest -v test/tests.py
 
 coverage-job1:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Application -m pytest test_videoplayer.py
+    - coverage run --source=Application -m pytest test/tests.py
     - coverage report -m
 
