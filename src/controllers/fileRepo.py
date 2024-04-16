@@ -1,7 +1,7 @@
 import sys
 sys.path.append("../")
 import csv
-from src.models.point import Point
+from models.point import Point
 import os
 
 
