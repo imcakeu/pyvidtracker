@@ -1,4 +1,6 @@
 import tkinter as tk
+import tkinter.messagebox
+
 from controllers.fileRepo import FileRepo
 from models.point import Point
 from models.videoPlayer import VideoPlayer
@@ -25,6 +27,9 @@ class Controller:
         pos_x, pos_y = event.x, event.y
         new_point = Point(pos_x, pos_y)
         self.pointage_data.append(new_point)
+
+        self.videoPlayer.move_fwd_frame()
+
         print(f"Position : abscisse = {pos_x} ; ordonnées = {pos_y}")
 
     def save_file(self):
@@ -41,11 +46,11 @@ class Controller:
         
     def exporter(self):
         if(not self.is_pointage):
-            print("ERROR: Impossible d'exporter si le mode pointage est desactivé.")
+            self.parent.error_handler("Impossible d'exporter si le mode pointage est desactivé")
             return
 
         if(len(self.pointage_data) == 0):
-            print("ERROR: Aucune donnée à sauvegarder.")
+            self.parent.error_handler("Aucune donnée à sauvegarder")
             return
 
         path = self.save_file(self)

@@ -67,7 +67,7 @@ class View(tk.Frame):
 
     def onSaveCSV(self):
         print("Bouton pressé: Sauvegarder en CSV")
-        self.controller.exporter(self.controller)
+        self.controller.exporter()
 
     def onExit(self):
         sys.exit("User has quit successfully")
