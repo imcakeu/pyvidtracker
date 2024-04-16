@@ -16,12 +16,12 @@ buid-job1:
 test-job1:
   stage: test
   script :
-    - python3 -m unittest -v test/tests.py
+    - python3 -m unittest -v tests.py
 
 coverage-job1:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Application -m pytest test/tests.py
+    - coverage run --source=Application -m pytest tests.py
     - coverage report -m
 
