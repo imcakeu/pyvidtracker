@@ -1,47 +1,77 @@
 from tkinter import *
-from tkinter import messagebox
 import PIL.Image, PIL.ImageTk
 import cv2
 import os
 
+# Crée un canvas et y affiche une vidéo.
 class VideoPlayer:
-    def __init__(self, controller, window, video_file, is_pointage):
+    def __init__(self, controller, window, video_file, is_point_mode):
+        # Variables
         self.controller = controller
         self.window = window
+        self.delay = 15
+        self.is_point_mode = is_point_mode
 
-        self.is_pointage = is_pointage
-        if(self.is_pointage == False):
+        # On crée le canvas qui affiche le lecteur vidéo.
+        # Si on n'est pas en mode pointage on crée simplement le canvas.
+        # Si on est en mode pointage, on paramètre le curseur de l'utilisateur de sorte à
+        # ce qu'il soit en croix (+) pour indiquer le mode pointage.
+        if(self.is_point_mode == False):
             self.canvas = Canvas(window)
         else:
             self.canvas = Canvas(window, cursor="cross")
-            self.pause = True
-
         self.canvas.pack()
-        self.delay = 15   # ms
 
+        # L'ouverture initiale du lecteur ouvre une vidéo par défaut.
+        # Si un fichier à été precisé (ouverture vidéo de l'utilisateur) il sera ouvert.
         if video_file == "default":
             self.open_file(self.get_video_file("compteur.mp4"))
         else:
             self.open_file(video_file)
 
-        if(self.is_pointage == True):
-            self.pause = True
+        # Quand tout est parametré, la vidéo commence à jouer.
+        # Elle est mise en pause automatiquement si l'utilisateur est en mode pointage.
         self.play_video()
+        self.pause = self.is_point_mode
 
+    #### Contrôles
+    ###
+
+    # Bascule entre pause et lire (II / >)
+    def toggle_play_pause(self):
+        self.play_pause(not self.pause)
+
+    # Recule d'une frame (<)
+    def move_back_frame(self):
+        self.move_frame(-1)
+
+    # Avance d'une frame (>)
+    def move_fwd_frame(self):
+        self.move_frame(1)
+
+    # Reprend la vidéo au tout début (<<)
+    def start_video(self):
+        if self.cap.isOpened():
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            self.toggle_play_pause()
+
+    ## Passe la vidéo à la toute fin (>>)
+    def end_video(self):
+        if self.cap.isOpened():
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.cap.get(cv2.CAP_PROP_FRAME_COUNT) - 10)
+            self.play_pause(False)
+
+    ####
+    #### Fin
+
+    # Prend en compte la valeur donnée pour mettre en pause ou reprendre la lecture de la vidéo
+    # Met à jour l'affichage du bouton lire/pause
     def play_pause(self, value):
         self.pause = value
         self.play_video()
         self.controller.view.play_pause_button.config(text=">" if self.pause else "II")
 
-    def toggle_play_pause(self):
-        self.play_pause(not self.pause)
-
-    def move_back_frame(self):
-        self.move_frame(-1)
-
-    def move_fwd_frame(self):
-        self.move_frame(1)
-
+    # Décale la lecture de la vidéo de 'count' frames.
     def move_frame(self, count):
         if self.cap.isOpened():
             current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
@@ -49,32 +79,25 @@ class VideoPlayer:
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, new_frame)
             self.play_pause(True)
 
-    def start_video(self):
-        if self.cap.isOpened():
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            self.toggle_play_pause()
-
-    def end_video(self):
-        if self.cap.isOpened():
-            # Seek to the last frame of the video
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.cap.get(cv2.CAP_PROP_FRAME_COUNT) - 10)
-            # Pause the video
-            self.play_pause(False)
-
+    # Retourne le path d'un fichier vidéo dans le dossier local resources/videos à partir de son nom.
     def get_video_file(self, video_name):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         video_path = os.path.abspath(os.path.join(script_dir, '..', '..', 'resources', 'videos', video_name))
         return video_path
 
-    def open_file(self, filename):
+    # Ouvre un fichier vidéo à partir d'un path
+    def open_file(self, file_path):
+        self.file_path = file_path
         self.pause = False
-        self.filename = filename
-        print("Reading video:", self.filename)
-        self.cap = cv2.VideoCapture(self.filename)
+
+        self.cap = cv2.VideoCapture(self.file_path)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = self.width, height = self.height)
 
+        print("Reading video:", self.file_path)
+
+    # Extrait l'image à afficher du fichier vidéo
     def get_frame(self):
         try:
             if self.cap.isOpened():
@@ -89,8 +112,8 @@ class VideoPlayer:
             print("Error:", e)
             return (False, None)
 
+    # Joue la vidéo
     def play_video(self):
-        # Get a frame from the video source, and go to the next frame automatically
         ret, frame = self.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))

@@ -1,7 +1,7 @@
 class Point():
     def __init__(self, x, y):
-        self.__x = x  # private variable for X
-        self.__y = y  # private variable for Y
+        self.__x = x
+        self.__y = y
 
     def get_x(self):
         return self.__x
