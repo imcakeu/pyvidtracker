@@ -1,16 +1,31 @@
 import tkinter as tk
 from controllers.fileRepo import FileRepo
 from models.point import Point
-from controllers.videoPlayer import VideoPlayer
+from models.videoPlayer import VideoPlayer
 from tkinter import filedialog
 
 class Controller:
-    def __init__(self, parent, view, file_name):
+    def __init__(self, parent, view, file_name, is_pointage):
         self.parent = parent
-        self.videoPlayer = VideoPlayer(self, self.parent, file_name)
+        self.is_pointage = is_pointage
+        self.videoPlayer = VideoPlayer(self, self.parent, file_name, is_pointage)
+
         self.view = view
         self.view.setController(self)
         self.view.userinterface_videocontrol()
+
+        self.pointage_data = []
+        if(is_pointage):
+            self.videoPlayer.canvas.bind("<Button-1>", self.event_click_canvas)
+
+    # Appelé quand l'utilisateur clique sur le lecteur vidéo.
+    # Activé seulement si is_pointage est True car on ne veut enregistrer
+    # les données seulement quand on est en mode pointage.
+    def event_click_canvas(self, event):
+        pos_x, pos_y = event.x, event.y
+        new_point = Point(pos_x, pos_y)
+        self.pointage_data.append(new_point)
+        print(f"Position : abscisse = {pos_x} ; ordonnées = {pos_y}")
 
     def save_file(self):
         file_path = filedialog.asksaveasfilename()
@@ -25,12 +40,16 @@ class Controller:
             return file_path
         
     def exporter(self):
-        point = Point(12, 34)
-        point2 = Point(56, 78)
-        point3 = Point(90, 0)
+        if(not self.is_pointage):
+            print("ERROR: Impossible d'exporter si le mode pointage est desactivé.")
+            return
 
-        myPoints = [point, point2, point3]
-        FileRepo.CSVExport(FileRepo, myPoints, self.save_file(self))
+        if(len(self.pointage_data) == 0):
+            print("ERROR: Aucune donnée à sauvegarder.")
+            return
+
+        path = self.save_file(self)
+        FileRepo.CSVExport(FileRepo, self.pointage_data, path)
 
     def open_video(self):
         file_path = self.open_file()

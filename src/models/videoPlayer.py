@@ -5,19 +5,28 @@ import cv2
 import os
 
 class VideoPlayer:
-    def __init__(self, controller, window, video_file):
+    def __init__(self, controller, window, video_file, is_pointage):
         self.controller = controller
         self.window = window
-        self.canvas = Canvas(window)
+
+        self.is_pointage = is_pointage
+        if(self.is_pointage == False):
+            self.canvas = Canvas(window)
+        else:
+            self.canvas = Canvas(window, cursor="cross")
+            self.pause = True
+
         self.canvas.pack()
         self.delay = 15   # ms
+
         if video_file == "default":
             self.open_file(self.get_video_file("compteur.mp4"))
         else:
             self.open_file(video_file)
+
+        if(self.is_pointage == True):
+            self.pause = True
         self.play_video()
-        # self.toggle_play_pause()
-        # self.window.mainloop()
 
     def play_pause(self, value):
         self.pause = value

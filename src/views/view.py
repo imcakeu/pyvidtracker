@@ -23,8 +23,7 @@ class View(tk.Frame):
         menubar.add_cascade(label="Fichier", menu=fileMenu)
 
         pointageMenu = Menu(menubar)
-        pointageMenu.add_command(label="Créer une nouvelle échelle")
-        pointageMenu.add_command(label="Activer l'affichage de l'échelle")
+        pointageMenu.add_command(label="Activer/Désactiver Pointage", command = self.togglePointage)
         pointageMenu.add_command(label="Sauvegarder les données en CSV...", command = self.onSaveCSV)
         menubar.add_cascade(label="Pointage", menu=pointageMenu)
 
@@ -62,9 +61,13 @@ class View(tk.Frame):
         print("Bouton pressé: Ouvrir une video")
         self.controller.open_video()
 
+    def togglePointage(self):
+        print("Bouton pressé: Activer/Désactiver Pointage")
+        self.controller.parent.new_player_pointage()
+
     def onSaveCSV(self):
         print("Bouton pressé: Sauvegarder en CSV")
-        self.controller.exporter()
+        self.controller.exporter(self.controller)
 
     def onExit(self):
         sys.exit("User has quit successfully")
