@@ -22,7 +22,5 @@ class FileRepo:
             writer = csv.writer(file)
             writer.writerow(["X", "Y"])
             for point in points:
-                writer.writerow([point.get_x(), point.get_y()])
+                writer.writerow([point.get_x(), point.get_y(), point.get_z()])
         return path
-    
-    

@@ -30,13 +30,14 @@ class Controller:
     def event_click_canvas(self, event):
         # On crée un point qu'on rajoute à point_data
         pos_x, pos_y = event.x, event.y
-        new_point = Point(pos_x, pos_y)
+        var_t = self.videoPlayer.get_playback_time()
+        new_point = Point(pos_x, pos_y, var_t)
         self.point_data.append(new_point)
 
         # On avance d'une frame
         self.videoPlayer.move_fwd_frame()
 
-        print(f"Position : abscisse = {pos_x} ; ordonnées = {pos_y}")
+        print(f"Clic ({var_t}) : X = {pos_x} ; Y = {pos_y}")
 
     # Ouvre une fênetre dialogue pour sauvegarder un fichier
     def save_file(self):

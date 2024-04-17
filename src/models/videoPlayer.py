@@ -121,6 +121,15 @@ class VideoPlayer:
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
+    # Get the playback time in seconds
+    def get_playback_time(self):
+        if self.cap.isOpened():
+            playback_msec = self.cap.get(cv2.CAP_PROP_POS_MSEC)
+            playback_sec = playback_msec / 1000
+            return playback_sec
+        else:
+            return None
+
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
