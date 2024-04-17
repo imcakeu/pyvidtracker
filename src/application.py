@@ -38,7 +38,7 @@ class Application(tk.Tk):
     # Affiche une boîte de dialogue d'erreur et affiche l'erreur dans le terminal.
     def error_handler(self, error):
         print("ERROR:", error)
-        tk.messagebox.showerror(self.parent.title, error)
+        tk.messagebox.showerror(self.title, error)
 
 
 if __name__ == '__main__':
