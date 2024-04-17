@@ -37,7 +37,7 @@ class Controller:
         # On avance d'une frame
         self.videoPlayer.move_fwd_frame()
 
-        print(f"Clic ({var_t}) : X = {pos_x} ; Y = {pos_y}")
+        print(f"Point(x={pos_x}; y={pos_y}; {var_t}s)")
 
     # Ouvre une fênetre dialogue pour sauvegarder un fichier
     def save_file(self):
