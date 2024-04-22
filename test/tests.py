@@ -25,9 +25,9 @@ class MyTestClass(unittest.TestCase):
 
 
     def test_txt(self):
-        point = Point(random.randint(0,100), random.randint(0,100))
-        point2 = Point(random.randint(0,100), random.randint(0,100))
-        point3 = Point(random.randint(0,100), random.randint(0,100))
+        point = Point(random.randint(0,100), random.randint(0,100), 0.12)
+        point2 = Point(random.randint(0,100), random.randint(0,100), 0.36)
+        point3 = Point(random.randint(0,100), random.randint(0,100), 0.48)
         myPoints = [point, point2, point3]
         path = FileRepo.CSVExport(FileRepo, myPoints, './test.txt')
         self.assertTrue(FileRepo.is_csv_file(path), f"{path} n'est pas un fichier CSV.")
