@@ -11,9 +11,9 @@ class MyTestClass(unittest.TestCase):
         pass
 
     def test_csv_file(self):
-        point = Point(2, 3)
-        point2 = Point(4, 7)
-        point3 = Point(9, 1)
+        point = Point(2, 3, 0.15)
+        point2 = Point(4, 7, 0.34)
+        point3 = Point(9, 1, 0.72)
         myPoints = [point, point2, point3]
         path = FileRepo.CSVExport(FileRepo, myPoints, 'test')
 
