@@ -43,22 +43,30 @@ class VideoPlayer:
 
     # Recule d'une frame (<)
     def move_back_frame(self):
-        self.move_frame(-1)
+        if self.cap.isOpened():
+            self.play_pause(True)
+            current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame - 2)
 
     # Avance d'une frame (>)
     def move_fwd_frame(self):
-        self.move_frame(1)
+        if self.cap.isOpened():
+            self.play_pause(True)
+            current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame + 1)
 
     # Reprend la vidéo au tout début (<<)
     def start_video(self):
         if self.cap.isOpened():
+            self.play_pause(True)
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            self.toggle_play_pause()
 
     ## Passe la vidéo à la toute fin (>>)
     def end_video(self):
         if self.cap.isOpened():
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.cap.get(cv2.CAP_PROP_FRAME_COUNT) - 10)
+            self.play_pause(True)
+            last_frame = self.cap.get(cv2.CAP_PROP_FRAME_COUNT)
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, last_frame - 5)
             self.play_pause(False)
 
     ####
@@ -70,14 +78,6 @@ class VideoPlayer:
         self.pause = value
         self.play_video()
         self.controller.view.play_pause_button.config(text=">" if self.pause else "II")
-
-    # Décale la lecture de la vidéo de 'count' frames.
-    def move_frame(self, count):
-        if self.cap.isOpened():
-            current_frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
-            new_frame = max(0, current_frame + count)
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES, new_frame)
-            self.play_pause(True)
 
     # Retourne le path d'un fichier vidéo dans le dossier local resources/videos à partir de son nom.
     def get_video_file(self, video_name):
