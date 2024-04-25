@@ -64,10 +64,10 @@ class Controller:
         # On affiche une erreur si l'utilisateur n'est pas en mode pointage ou n'a pas de données
         if(not self.is_point_mode):
             self.parent.error_handler("Impossible d'exporter si le mode pointage est desactivé")
-            return
+            return True
         if(len(self.point_data) == 0):
             self.parent.error_handler("Aucune donnée à sauvegarder")
-            return
+            return True
 
         # On laisse l'utilisateur choisir où sauvegarder ses données
         file_path = self.save_file()
