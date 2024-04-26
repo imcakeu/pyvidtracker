@@ -1,6 +1,7 @@
 import sys
 sys.path.append("./src")
 import coverage
+from src.application import Application
 
 # Initialize coverage
 cov = coverage.Coverage()
