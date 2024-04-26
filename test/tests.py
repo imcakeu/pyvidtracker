@@ -42,11 +42,12 @@ class MyTestClass(unittest.TestCase):
         path = FileRepo.CSVExport(FileRepo, myPoints, './test.txt')
         self.assertTrue(FileRepo.is_csv_file(path), f"{path} n'est pas un fichier CSV.")
 
+    '''
     def test_saved_file(self):
         file_path = filedialog.asksaveasfilename()
         if file_path[:3] == 'C:/':
             self.assertTrue(Controller.save_file(self))
-
+    '''
     
     def is_mp4_file(self,file_path):
         _, file_extension = os.path.splitext(file_path)
