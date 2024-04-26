@@ -84,6 +84,7 @@ class MyTestClass(unittest.TestCase):
     lorsque les deux fonctions test de la fonction exporter sont lancer lors de la même exécution, 
     test_exporter2 affiche une  erreur qui n'existe pas quand on les exécutes séparément
     '''
+    '''
     def test_exporter2(self):
         self.parent = Application()
         self.is_point_mode = True
@@ -92,7 +93,7 @@ class MyTestClass(unittest.TestCase):
             self.assertTrue(Controller.exporter(self))
         else:
             self.assertTrue(False)
-
+    '''
 
 
 if __name__ == '__main__':
