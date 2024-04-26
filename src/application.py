@@ -2,7 +2,7 @@ import tkinter as tk
 from controllers.controller import Controller
 from views.view import View
 
-# VideoTracker est logiciel qui permet à l'utilisateur de lire des vidéos et
+# VideoTracker est un logiciel qui permet à l'utilisateur de lire des vidéos et
 # utiliser le système de "pointage" pour placer des points et d'enregistrer des données.
 # Lancez ce script pour commencer.
 class Application(tk.Tk):

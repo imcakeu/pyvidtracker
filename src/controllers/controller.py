@@ -6,7 +6,7 @@ from models.point import Point
 from models.videoPlayer import VideoPlayer
 from tkinter import filedialog
 
-# Crée la View et le VideoPlayer tout en gérant le système de pointage
+# Crée le VideoPlayer tout en gérant le système de pointage
 class Controller:
     def __init__(self, parent, view, file_name, is_point_mode):
         # Variables
@@ -16,13 +16,13 @@ class Controller:
 
         # Création d'un lecteur vidéo
         self.videoPlayer = VideoPlayer(self, self.parent, file_name, is_point_mode)
-        # L'évènement de clic ne doit être appelé que si on est en mode pointage
+        # L'évènement de clic ne doit être assigné que si on est en mode pointage
         if(is_point_mode):
             self.videoPlayer.canvas.bind("<Button-1>", self.event_click_canvas)
 
         # Paramètrage du View pour rattacher les contrôles vidéo
         self.view = view
-        self.view.setController(self)
+        self.view.set_controller(self)
         self.view.userinterface_videocontrol()
 
     # Enregistre la position du clic sur le lecteur vidéo
@@ -53,13 +53,13 @@ class Controller:
             print("Opening File: ", file_path)
             return file_path
 
-    # Appelé dans View quand l'utilisateur ouvre une vidéo
+    # Appelé depuis View quand l'utilisateur veut ouvrir une vidéo
     def open_video(self):
         file_path = self.open_file()
         if file_path:
             self.parent.new_player(file_path)
 
-    # Appelé dans View quand l'utilisateur exporte ses données de pointage
+    # Appelé depuis View quand l'utilisateur exporte ses données de pointage
     def exporter(self):
         # On affiche une erreur si l'utilisateur n'est pas en mode pointage ou n'a pas de données
         if(not self.is_point_mode):

@@ -9,7 +9,7 @@ class View(tk.Frame):
         self.window = window
         self.userinterface_menus()
 
-    def setController(self, controller):
+    def set_controller(self, controller):
         self.controller = controller
 
     # Crée le "menubar" (boutons de la navbar)
