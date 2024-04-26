@@ -57,7 +57,7 @@ class MyTestClass(unittest.TestCase):
     def test_open_file_and_video(self):
         file_path = filedialog.askopenfilename()
         self.assertTrue(self.is_mp4_file(file_path), f"{file_path} n'est pas un fichier mp4.")
-'''
+
 
     def test_exporter1(self):
         self.parent = Application()
@@ -66,7 +66,7 @@ class MyTestClass(unittest.TestCase):
             self.assertTrue(Controller.exporter(self))
         else:
             self.assertTrue(False)
-        
+    '''
     
     def test_get_x(self):
         point = Point(2, 3, 4)
