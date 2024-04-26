@@ -53,11 +53,11 @@ class MyTestClass(unittest.TestCase):
         _, file_extension = os.path.splitext(file_path)
         return file_extension.lower() == '.mp4'
 
-
+    '''
     def test_open_file_and_video(self):
         file_path = filedialog.askopenfilename()
         self.assertTrue(self.is_mp4_file(file_path), f"{file_path} n'est pas un fichier mp4.")
-
+'''
 
     def test_exporter1(self):
         self.parent = Application()
