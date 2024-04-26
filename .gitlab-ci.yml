@@ -23,5 +23,5 @@ coverage-job1:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Application -m pytest test/tests.py
+    - coverage run --source=Application -m pytest test/coverage.py
     - coverage report -m
