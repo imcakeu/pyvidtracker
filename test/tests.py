@@ -12,9 +12,11 @@ from tkinter import filedialog
 import os
 import random
 
+'''
 # Initialize coverage
 cov = coverage.Coverage()
 cov.start()
+'''
 
 class MyTestClass(unittest.TestCase):
     def setup(self):
@@ -93,11 +95,11 @@ class MyTestClass(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # Stop coverage
+    '''# Stop coverage
     cov.stop()
     # Save coverage results
     cov.save()
     # Generate coverage report
-    cov.report()
+    cov.report()'''
     # Run unit test
     unittest.main()
