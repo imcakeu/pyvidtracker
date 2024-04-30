@@ -37,6 +37,7 @@ class Application(tk.Tk):
     def new_player_toggle_point_mode(self):
         self.controller.videoPlayer.canvas.delete('all')
         self.destroy()
+
         new_point_mode = PointMode.Disabled
         if(self.point_mode == PointMode.Disabled):
             new_point_mode = PointMode.Enabled

@@ -111,10 +111,13 @@ class VideoPlayer:
                 else:
                     # Notify play_video method that video has ended
                     self.pause = True
+                    if(self.point_mode == PointMode.Enabled):
+                        self.controller.exporter()
                     return (False, None)
         except Exception as e:
             print("Error:", e)
             return (False, None)
+
 
     # Joue la vidéo
     def play_video(self):
