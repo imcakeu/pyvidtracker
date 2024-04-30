@@ -93,7 +93,7 @@ class VideoPlayer:
         self.cap = cv2.VideoCapture(self.file_path)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.config(width = self.width, height = self.height)
+        self.canvas.config(width = 640, height = 360)
 
         print("Reading video:", self.file_path)
 
