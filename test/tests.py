@@ -1,10 +1,12 @@
 import sys
 sys.path.append("./src")
+
+import os
 import unittest
+import random
+
 from controllers.fileRepo import FileRepo
 from models.point import Point
-import os
-import random
 
 class MyTestClass(unittest.TestCase):
     def setup(self):

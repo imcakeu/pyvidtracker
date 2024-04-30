@@ -1,8 +1,8 @@
 import sys
 sys.path.append("../")
-import csv
-from models.point import Point
+
 import os
+import csv
 
 # Gère la sauvegarde des fichiers
 class FileRepo:

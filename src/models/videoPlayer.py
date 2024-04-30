@@ -1,22 +1,26 @@
-from tkinter import *
-import PIL.Image, PIL.ImageTk
-import cv2
 import os
+import cv2
+import PIL.Image, PIL.ImageTk
+
+from tkinter import *
+
+from models.pointMode import PointMode
+
 
 # Crée un canvas et y affiche une vidéo.
 class VideoPlayer:
-    def __init__(self, controller, window, video_file, is_point_mode):
+    def __init__(self, controller, window, video_file, point_mode):
         # Variables
         self.controller = controller
         self.window = window
         self.delay = 15
-        self.is_point_mode = is_point_mode
+        self.point_mode = point_mode
 
         # On crée le canvas qui affiche le lecteur vidéo.
         # Si on n'est pas en mode pointage on crée simplement le canvas.
         # Si on est en mode pointage, on paramètre le curseur de l'utilisateur de sorte à
         # ce qu'il soit en croix (+) pour indiquer le mode pointage.
-        if(self.is_point_mode == False):
+        if(self.point_mode == PointMode.Disabled):
             self.canvas = Canvas(window)
         else:
             self.canvas = Canvas(window, cursor="cross")    
@@ -32,7 +36,7 @@ class VideoPlayer:
         # Quand tout est parametré, la vidéo commence à jouer.
         # Elle est mise en pause automatiquement si l'utilisateur est en mode pointage.
         self.play_video()
-        self.pause = self.is_point_mode
+        self.pause = (self.point_mode == PointMode.Enabled)
 
     #### Contrôles
     ###
@@ -93,7 +97,7 @@ class VideoPlayer:
         self.cap = cv2.VideoCapture(self.file_path)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.config(width = self.width, height = self.height)
+        self.canvas.config(width = 640, height = 360)
 
         print("Reading video:", self.file_path)
 
