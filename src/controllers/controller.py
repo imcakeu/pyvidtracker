@@ -99,3 +99,6 @@ class Controller:
         file_path = self.save_file()
         if file_path:
             FileRepo.CSVExport(FileRepo, self.point_data, file_path)
+
+        if self.point_mode == PointMode.Enabled:
+            self.parent.new_player_toggle_point_mode()
