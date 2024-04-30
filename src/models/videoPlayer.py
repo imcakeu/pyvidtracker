@@ -19,8 +19,8 @@ class VideoPlayer:
         if(self.is_point_mode == False):
             self.canvas = Canvas(window)
         else:
-            self.canvas = Canvas(window, cursor="cross")
-        self.canvas.pack()
+            self.canvas = Canvas(window, cursor="cross")    
+        self.canvas.grid(column=0,row=0, columnspan=15)
 
         # L'ouverture initiale du lecteur ouvre une vidéo par défaut.
         # Si un fichier à été precisé (ouverture vidéo de l'utilisateur) il sera ouvert.

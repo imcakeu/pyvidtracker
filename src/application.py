@@ -11,7 +11,7 @@ class Application(tk.Tk):
         # Paramétrage fênetre
         self.title('VideoTracker Media Player')
         self.geometry("640x400+300+300")
-        self.resizable(False, False)
+        self.resizable(True, True)
 
         # Variables
         self.file_name = file_name

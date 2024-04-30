@@ -37,21 +37,27 @@ class View(tk.Frame):
     # Crée les boutons de contrôle de la vidéo
     # Appelé par Controller après la création de VideoPlayer
     def userinterface_videocontrol(self):
+        #configuration des colonnes
+
+        self.grid_columnconfigure(4,weight=1)
         # Boutons début (<<) et recul (<)
         self.start_button = Button(self.window, text="<<", command=self.onStartVideo)
-        self.start_button.pack(side='left')
+        self.start_button.grid(column=5,row=1)
         self.move_back_button = Button(self.window, text="<", command=self.onMoveBackFrame)
-        self.move_back_button.pack(side='left')
+        self.move_back_button.grid(column=6,row=1)
 
         # Bouton lire/pause (par défaut II, ou > quand en pause)
         self.play_pause_button = Button(self.window, text="II", command=self.onTogglePlayPause)
-        self.play_pause_button.pack(side='left')
+        self.play_pause_button.grid(column=7,row=1)
+        #self.play_pause_button.pack(side='left')
 
         # Boutons avance (>) et fin (>>)
         self.move_fwd_button = Button(self.window, text=">", command=self.onMoveFwdFrame)
-        self.move_fwd_button.pack(side='left')
+        self.move_fwd_button.grid(column=8,row=1)
+        #self.move_fwd_button.pack(side='left')
         self.end_button = Button(self.window, text=">>", command=self.onEndVideo)
-        self.end_button.pack(side='left')
+        self.end_button.grid(column=9,row=1)
+        #self.end_button.pack(side='left')
 
         # Affecte les mêmes fonctions sur les touches du claiver.
         # Flèches gauche/droite pour recul/avance
