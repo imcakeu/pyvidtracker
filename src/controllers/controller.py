@@ -12,6 +12,7 @@ class Controller:
         self.parent = parent
         self.point_mode = point_mode
         self.point_data = []
+        self.scale_data = []
 
         # Création d'un lecteur vidéo
         self.videoPlayer = VideoPlayer(self, self.parent, file_name, point_mode)
@@ -27,6 +28,7 @@ class Controller:
     # Enregistre la position du clic sur le lecteur vidéo
     # Évènement appelé seulement en mode pointage
     def event_click_canvas(self, event):
+        # Mode pointage (on rajoute autant de points qu'on veut)
         if(self.point_mode == PointMode.Enabled):
             # On crée un point qu'on rajoute à point_data
             pos_x, pos_y = event.x, event.y
@@ -38,6 +40,30 @@ class Controller:
             self.videoPlayer.move_fwd_frame()
 
             print(f"Point(x={pos_x}; y={pos_y}; {var_t}s)")
+
+        # Mode échelle (on rajoute deux points pour calculer leur distance
+        elif(self.point_mode == PointMode.SetScale):
+            # On rajoute le point d'origine à scale_data
+            pos_x, pos_y = event.x, event.y
+            var_t = self.videoPlayer.get_playback_time()
+            new_point = Point(pos_x, pos_y, var_t)
+            self.scale_data.append(new_point)
+
+            # On avance d'une frame
+            self.videoPlayer.move_fwd_frame()
+
+            # On passe à la 2ème étape (qui necéssite un second clic)
+            self.point_mode = PointMode.SetScaleStep
+
+        elif (self.point_mode == PointMode.SetScaleStep):
+            # On rajoute le point d'origine à scale_data
+            pos_x, pos_y = event.x, event.y
+            var_t = self.videoPlayer.get_playback_time()
+            new_point = Point(pos_x, pos_y, var_t)
+            self.scale_data.append(new_point)
+
+            #
+            self.parent.set_scale(self.scale_data)
 
     # Ouvre une fênetre dialogue pour sauvegarder un fichier
     def save_file(self):
