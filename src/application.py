@@ -2,6 +2,7 @@ import tkinter as tk
 
 from controllers.controller import Controller
 from models.pointMode import PointMode
+from models.videoPlayer import VideoPlayer
 from views.view import View
 
 # VideoTracker est un logiciel qui permet à l'utilisateur de lire des vidéos et
@@ -12,7 +13,9 @@ class Application(tk.Tk):
         super().__init__()
         # Paramétrage fênetre
         self.title('VideoTracker Media Player')
-        self.geometry("640x400+300+300")
+        self.dimensions = VideoPlayer.get_video_dimensions(self)
+        self.width , self.height = self.dimensions
+        self.geometry(f"{self.width}x{self.height+50}")
         self.resizable(True, True)
 
         # Variables

@@ -88,6 +88,15 @@ class VideoPlayer:
         script_dir = os.path.dirname(os.path.abspath(__file__))
         video_path = os.path.abspath(os.path.join(script_dir, '..', '..', 'resources', 'videos', video_name))
         return video_path
+    
+    #Retourne les dimention d'un fichier vidéo
+    def get_video_dimensions(self):
+        self.cap=cv2.VideoCapture("/autofs/unityaccount/cremi/bberges/logiciel/projetgroupeinitlogi/resources/videos/videotest.mp4")
+        self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        self.cap.release()
+        return self.width,self.height
 
     # Ouvre un fichier vidéo à partir d'un path
     def open_file(self, file_path):
