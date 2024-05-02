@@ -14,8 +14,9 @@ class Application(tk.Tk):
     def __init__(self, file_name="default", point_mode=PointMode.Disabled, point_scale=1):
         super().__init__()
         # Paramétrage fênetre
+        self.file_path = VideoPlayer.get_video_file(self, "compteur.mp4")
         self.title('VideoTracker Media Player')
-        self.dimensions = VideoPlayer.get_video_dimensions(self)
+        self.dimensions = VideoPlayer.get_video_dimensions(self,self.file_path)
         self.width , self.height = self.dimensions
         self.geometry(f"{self.width}x{self.height+50}")
         self.resizable(True, True)

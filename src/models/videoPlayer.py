@@ -90,8 +90,8 @@ class VideoPlayer:
         return video_path
     
     #Retourne les dimention d'un fichier vidéo
-    def get_video_dimensions(self):
-        self.cap=cv2.VideoCapture("/autofs/unityaccount/cremi/bberges/logiciel/projetgroupeinitlogi/resources/videos/videotest.mp4")
+    def get_video_dimensions(self, file_path):
+        self.cap=cv2.VideoCapture(file_path)
         self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
