@@ -36,7 +36,7 @@ class VideoPlayer:
         # Quand tout est parametré, la vidéo commence à jouer.
         # Elle est mise en pause automatiquement si l'utilisateur est en mode pointage.
         self.play_video()
-        self.pause = (self.point_mode == PointMode.Enabled)
+        self.pause = (self.point_mode != PointMode.Disabled)
 
     #### Contrôles
     ###
@@ -120,10 +120,13 @@ class VideoPlayer:
                 else:
                     # Notify play_video method that video has ended
                     self.pause = True
+                    if(self.point_mode == PointMode.Enabled):
+                        self.controller.exporter()
                     return (False, None)
         except Exception as e:
             print("Error:", e)
             return (False, None)
+
 
     # Joue la vidéo
     def play_video(self):

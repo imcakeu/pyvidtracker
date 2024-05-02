@@ -27,12 +27,14 @@ class View(tk.Frame):
         pointageMenu = Menu(menubar)
         pointageMenu.add_command(label="Activer/désactiver Mode Pointage", command = self.togglePointage, accelerator="CTRL+Q")
         pointageMenu.add_command(label="Sauvegarder les données de Pointage en CSV...", command = self.onSaveCSV, accelerator="CTRL+S")
+        pointageMenu.add_command(label="Définir l'échelle...", command = self.onSetScale, accelerator="CTRL+E")
         menubar.add_cascade(label="Pointage", menu=pointageMenu)
 
         # Paramètre les raccourcis
         self.bind_all("<Control-o>", lambda x: self.onLoadVideo())
         self.bind_all("<Control-q>", lambda x: self.togglePointage())
         self.bind_all("<Control-s>", lambda x: self.onSaveCSV())
+        self.bind_all("<Control-e>", lambda x: self.onSetScale())
 
     # Crée les boutons de contrôle de la vidéo
     # Appelé par Controller après la création de VideoPlayer
@@ -91,6 +93,9 @@ class View(tk.Frame):
 
     def onSaveCSV(self):
         self.controller.exporter()
+
+    def onSetScale(self):
+        self.controller.parent.new_player_toggle_scale_mode()
 
     def onExit(self):
         sys.exit("User has quit successfully")
