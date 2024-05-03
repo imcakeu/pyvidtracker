@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 import sys
 
+from models.pointMode import PointMode
+
 # Gère l'affichage de l'interface
 class View(tk.Frame):
     def __init__(self, window):
@@ -71,6 +73,7 @@ class View(tk.Frame):
         self.controller.parent.bind("<k>", self.onTogglePlayPause_shortcut)
         self.controller.parent.bind("<j>", self.onStartVideo_shortcut)
         self.controller.parent.bind("<l>", self.onEndVideo_shortcut)
+        self.controller.parent.bind("<Escape>", self.onSaveCSV_shortcut)
 
     def onStartVideo(self):
         self.controller.videoPlayer.start_video()
@@ -113,3 +116,6 @@ class View(tk.Frame):
         self.onStartVideo()
     def onEndVideo_shortcut(self, var):
         self.onEndVideo()
+    def onSaveCSV_shortcut(self, var):
+        if self.controller.point_mode == PointMode.Enabled:
+            self.onSaveCSV()

@@ -31,7 +31,7 @@ class Application(tk.Tk):
         self.controller = Controller(self, self.view, file_name, point_mode)
 
         if(point_mode == PointMode.SetScale):
-            tk.messagebox.showinfo(self.title, "Vous allez à présent définir l'échelle (en mètres) sur cette vidéo. Faites un premier clic, puis un deuxième. Ensuite définissez la distance réelle entre ces deux points (en mètres).")
+            tk.messagebox.showinfo("Définir échelle", "Vous allez à présent définir l'échelle (en mètres) sur cette vidéo. Faites un premier clic, puis un deuxième. Ensuite définissez la distance réelle entre ces deux points (en mètres).")
 
         print("Current mode:", point_mode, "| Point scale:", point_scale)
 
@@ -61,8 +61,6 @@ class Application(tk.Tk):
         new_point_mode = PointMode.Disabled
         if(self.point_mode != PointMode.SetScaleStep):
             new_point_mode = PointMode.SetScale
-        else:
-            self.error_handler("Finissez de définir l'échelle avant de désactiver le mode.")
         self.__init__(self.file_name, new_point_mode)
 
     # Appelé dans controller après que les deux points sont définis
