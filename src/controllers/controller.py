@@ -32,7 +32,7 @@ class Controller:
         if(self.point_mode == PointMode.Enabled):
             # On crée un point qu'on rajoute à point_data
             pos_x, pos_y = event.x, event.y
-            var_t = self.videoPlayer.get_playback_time()
+            var_t = round(self.videoPlayer.get_playback_time(), 4)
             new_point = Point(pos_x, pos_y, var_t)
             self.point_data.append(new_point)
 

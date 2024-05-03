@@ -65,7 +65,7 @@ class Application(tk.Tk):
 
     # Appelé dans controller après que les deux points sont définis
     def set_scale(self, scale_data):
-        metres = simpledialog.askfloat(self.title, "Définissez la distance réelle entre ces deux points (en mètres")
+        metres = simpledialog.askfloat("Définir échelle", "Définissez la distance réelle entre ces deux points (en mètres")
         point_distance = math.sqrt( (scale_data[1].get_x() - scale_data[0].get_x())**2 + (scale_data[1].get_y()- scale_data[0].get_y())**2 )
         self.point_scale = point_distance / metres
         self.new_player_toggle_point_mode()
