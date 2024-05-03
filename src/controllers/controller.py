@@ -7,10 +7,11 @@ from models.videoPlayer import VideoPlayer
 
 # Crée le VideoPlayer tout en gérant le système de pointage
 class Controller:
-    def __init__(self, parent, view, file_name, point_mode):
+    def __init__(self, parent, view, file_name, point_mode, point_scale):
         # Variables
         self.parent = parent
         self.point_mode = point_mode
+        self.point_scale = point_scale
         self.point_data = []
         self.scale_data = []
 
@@ -33,7 +34,7 @@ class Controller:
             # On crée un point qu'on rajoute à point_data
             pos_x, pos_y = event.x, event.y
             var_t = round(self.videoPlayer.get_playback_time(), 4)
-            new_point = Point(pos_x, pos_y, var_t)
+            new_point = Point(pos_x  / self.point_scale, pos_y / self.point_scale, var_t)
             self.point_data.append(new_point)
 
             # On avance d'une frame
