@@ -121,12 +121,22 @@ class View(tk.Frame):
         if(type == "yx"):
             xpoints = np.array(table_valeurs_x)
             ypoints = np.array(table_valeurs_y)
-        if(type == "xt"):
+            plt.xlabel("Position X")
+            plt.ylabel("Position Y")
+
+        elif(type == "xt"):
             xpoints = np.array(table_valeurs_t)
             ypoints = np.array(table_valeurs_x)
-        if(type == "yt"):
+            plt.xlabel("Temps (en s)")
+            plt.ylabel("Position X")
+
+
+        elif(type == "yt"):
             xpoints = np.array(table_valeurs_t)
             ypoints = np.array(table_valeurs_y)
+            plt.xlabel("Temps (en s)")
+            plt.ylabel("Position Y")
+
 
         plt.plot(xpoints, ypoints)
         plt.show()
