@@ -3,7 +3,8 @@ from tkinter import *
 import sys
 
 from models.pointMode import PointMode
-
+import matplotlib.pyplot as plt
+import numpy as np
 # Gère l'affichage de l'interface
 class View(tk.Frame):
     def __init__(self, window):
@@ -22,15 +23,22 @@ class View(tk.Frame):
         # Crée un menu "Fichier"
         fileMenu = Menu(menubar)
         fileMenu.add_command(label="Ouvrir une vidéo...", command = self.onLoadVideo, accelerator="CTRL+O")
+        fileMenu.add_command(label="Sauvegarder les données de Pointage en CSV...", command = self.onSaveCSV, accelerator="CTRL+S")
         fileMenu.add_command(label="Quitter", command = self.onExit)
         menubar.add_cascade(label="Fichier", menu=fileMenu)
 
-        # Crée un menu "Pointage"
-        pointageMenu = Menu(menubar)
-        pointageMenu.add_command(label="Activer/désactiver Mode Pointage", command = self.togglePointage, accelerator="CTRL+Q")
-        pointageMenu.add_command(label="Sauvegarder les données de Pointage en CSV...", command = self.onSaveCSV, accelerator="CTRL+S")
-        pointageMenu.add_command(label="Définir l'échelle...", command = self.onSetScale, accelerator="CTRL+E")
-        menubar.add_cascade(label="Pointage", menu=pointageMenu)
+        # Crée un menu "Modifier"
+        editMenu = Menu(menubar)
+        editMenu.add_command(label="Activer/désactiver Mode Pointage", command = self.togglePointage, accelerator="CTRL+Q")
+        editMenu.add_command(label="Définir l'échelle...", command = self.onSetScale, accelerator="CTRL+E")
+        menubar.add_cascade(label="Modifier", menu=editMenu)
+
+        # Crée un menu "Affichage"
+        viewMenu = Menu(menubar)
+        viewMenu.add_command(label="Graphe de y(x)", command = self.openGraph_yx)
+        viewMenu.add_command(label="Graphe de x(t)", command = self.openGraph_xt)
+        viewMenu.add_command(label="Graphe de y(t)", command = self.openGraph_yt)
+        menubar.add_cascade(label="Affichage", menu=viewMenu)
 
         # Paramètre les raccourcis
         self.bind_all("<Control-o>", lambda x: self.onLoadVideo())
@@ -99,6 +107,47 @@ class View(tk.Frame):
 
     def onSetScale(self):
         self.controller.parent.new_player_toggle_scale_mode()
+
+    def openGraph(self, type):
+        table_points = self.controller.point_data
+        table_valeurs_x = []
+        table_valeurs_y = []
+        table_valeurs_t = []
+        for i in range(len(table_points)):
+            table_valeurs_x.append(table_points[i].get_x())
+            table_valeurs_y.append(table_points[i].get_y())
+            table_valeurs_t.append(table_points[i].get_t())
+
+        if(type == "yx"):
+            xpoints = np.array(table_valeurs_x)
+            ypoints = np.array(table_valeurs_y)
+        if(type == "xt"):
+            xpoints = np.array(table_valeurs_t)
+            ypoints = np.array(table_valeurs_x)
+        if(type == "yt"):
+            xpoints = np.array(table_valeurs_t)
+            ypoints = np.array(table_valeurs_y)
+
+        plt.plot(xpoints, ypoints)
+        plt.show()
+
+    def openGraph_yx(self):
+        if self.controller.point_data != []:
+            self.openGraph("yx")
+        else:
+            self.window.error_handler("Aucune donnée à afficher")
+
+    def openGraph_xt(self):
+        if self.controller.point_data != []:
+            self.openGraph("xt")
+        else:
+            self.window.error_handler("Aucune donnée à afficher")
+
+    def openGraph_yt(self):
+        if self.controller.point_data != []:
+            self.openGraph("yt")
+        else:
+            self.window.error_handler("Aucune donnée à afficher")
 
     def onExit(self):
         sys.exit("User has quit successfully")

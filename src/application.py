@@ -17,9 +17,9 @@ class Application(tk.Tk):
         self.file_path = VideoPlayer.get_video_file(self, "compteur.mp4")
         self.title('VideoTracker Media Player')
         self.dimensions = VideoPlayer.get_video_dimensions(self,self.file_path)
-        self.width , self.height = self.dimensions
+        self.width, self.height = self.dimensions
         self.geometry(f"{self.width}x{self.height+50}")
-        self.resizable(True, True)
+        self.resizable(False, False)
 
         # Variables
         self.file_name = file_name
@@ -40,7 +40,7 @@ class Application(tk.Tk):
     def new_player(self, file_name):
         self.controller.videoPlayer.canvas.delete('all')
         self.destroy()
-        self.__init__(file_name, PointMode.Disabled, self.point_scale)
+        self.__init__(file_name, PointMode.Disabled, 1)
 
     # Idem, mais cette fois ci redémarre la *même vidéo* en basculant le mode pointage.
     # Appelé dans View quand l'utilisateur active/desactive ce mode.
@@ -74,7 +74,7 @@ class Application(tk.Tk):
     # Affiche une boîte de dialogue d'erreur et affiche l'erreur dans le terminal.
     def error_handler(self, error):
         print("ERROR:", error)
-        tk.messagebox.showerror(self.title, error)
+        tk.messagebox.showerror("Erreur", error)
 
 if __name__ == '__main__':
     app = Application()

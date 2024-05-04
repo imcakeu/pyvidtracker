@@ -101,5 +101,4 @@ class Controller:
         if file_path:
             FileRepo.CSVExport(FileRepo, self.point_data, file_path)
 
-        if self.point_mode == PointMode.Enabled:
-            self.parent.new_player_toggle_point_mode()
+        self.parent.new_player_toggle_point_mode()
