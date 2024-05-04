@@ -31,7 +31,7 @@ class Application(tk.Tk):
         self.controller = Controller(self, self.view, file_name, point_mode, point_scale)
 
         if(point_mode == PointMode.SetScale):
-            tk.messagebox.showinfo("Définir échelle", "Vous allez à présent définir l'échelle (en mètres) sur cette vidéo. Faites un premier clic, puis un deuxième. Ensuite définissez la distance réelle entre ces deux points (en mètres).")
+            tk.messagebox.showinfo("Définir échelle", "Vous allez à présent définir l'échelle réelle sur cette vidéo. Faites un premier clic, puis un deuxième. Définissez ensuite la distance réelle entre ces deux points (dans l'unité de votre choix).")
 
         print("Current mode:", point_mode, "| Point scale:", point_scale)
 
@@ -66,7 +66,7 @@ class Application(tk.Tk):
     # Définit l'échelle pixels / mètres sur la vidéo
     # Appelé dans controller après que les deux points sont définis
     def set_scale(self, scale_data):
-        value = simpledialog.askfloat("Définir échelle", "Définissez la distance réelle entre ces deux points (en mètres")
+        value = simpledialog.askfloat("Définir échelle", "Définissez la distance réelle entre ces deux points.")
         point_distance = math.sqrt( (scale_data[1].get_x() - scale_data[0].get_x())**2 + (scale_data[1].get_y()- scale_data[0].get_y())**2 )
         self.point_scale = point_distance / value
         self.new_player_toggle_point_mode()
