@@ -12,7 +12,7 @@ from views.view import View
 # utiliser le système de "pointage" pour placer des points et d'enregistrer des données.
 # Lancez ce script pour commencer.
 class Application(tk.Tk):
-    def __init__(self, file_name="default", point_mode=PointMode.Disabled, point_scale=1):
+    def __init__(self, file_name="default", point_mode=PointMode.Disabled, point_scale=1, point_origin = [0, 0]):
         super().__init__()
         # Paramétrage fênetre
         self.file_path = VideoPlayer.get_video_file(self, "compteur.mp4")
@@ -29,6 +29,11 @@ class Application(tk.Tk):
         self.file_name = file_name
         self.point_mode = point_mode
         self.point_scale = point_scale
+        # Valeur par défaut (milieu de l'écran)
+        if point_origin == [0, 0]:
+            self.point_origin = [self.width / 2, self.height / 2]
+        else:
+            self.point_origin = point_origin
 
         # Création du view (fênetre) et controller (pointage et lecteur vidéo)
         self.view = View(self)
@@ -44,7 +49,7 @@ class Application(tk.Tk):
     def new_player(self, file_name):
         self.controller.videoPlayer.canvas.delete('all')
         self.destroy()
-        self.__init__(file_name, PointMode.Disabled, 1)
+        self.__init__(file_name, PointMode.Disabled, 1, [0, 0])
 
     # Idem, mais cette fois ci redémarre la *même vidéo* en basculant le mode pointage.
     # Appelé dans View quand l'utilisateur active/desactive ce mode.
@@ -55,7 +60,7 @@ class Application(tk.Tk):
         new_point_mode = PointMode.Disabled
         if(self.point_mode == PointMode.Disabled):
             new_point_mode = PointMode.Enabled
-        self.__init__(self.file_name, new_point_mode, self.point_scale)
+        self.__init__(self.file_name, new_point_mode, self.point_scale, self.point_origin)
 
     # Idem, mais cette fois ci redémarre la *même vidéo* en basculant le mode échelle.
     # Appelé dans View quand l'utilisateur active/desactive ce mode.
@@ -73,6 +78,7 @@ class Application(tk.Tk):
         value = simpledialog.askfloat("Définir échelle", "Définissez la distance réelle entre ces deux points.")
         point_distance = math.sqrt( (scale_data[1].get_x() - scale_data[0].get_x())**2 + (scale_data[1].get_y()- scale_data[0].get_y())**2 )
         self.point_scale = point_distance / value
+        self.point_origin = [scale_data[0].get_x(), scale_data[0].get_y()]
         self.new_player_toggle_point_mode()
 
     def get_image_file(self, image_name):

@@ -15,6 +15,8 @@ class VideoPlayer:
         self.window = window
         self.delay = 15
         self.point_mode = point_mode
+        self.window_x = self.window.width
+        self.window_y = self.window.height
 
         # On crée le canvas qui affiche le lecteur vidéo.
         # Si on n'est pas en mode pointage on crée simplement le canvas.
@@ -37,6 +39,7 @@ class VideoPlayer:
         # Elle est mise en pause automatiquement si l'utilisateur est en mode pointage.
         self.play_video()
         self.pause = (self.point_mode != PointMode.Disabled)
+
 
     #### Contrôles
     ###
@@ -134,6 +137,8 @@ class VideoPlayer:
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.display_grads()
+
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
@@ -145,6 +150,17 @@ class VideoPlayer:
             return playback_sec
         else:
             return None
+
+    def display_grads(self):
+        if self.point_mode == PointMode.Enabled:
+            window_x, window_y = self.window_x, self.window_y
+            origin_x, origin_y = self.window.point_origin[0], self.window.point_origin[1]
+
+            # Abscisse
+            self.canvas.create_line(0, origin_y, window_x, origin_y, fill="red")
+            # Ordonnée
+            self.canvas.create_line(origin_x, 0, origin_x, window_y, fill="red")
+
 
     def __del__(self):
         if self.cap.isOpened():
