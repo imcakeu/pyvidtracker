@@ -34,13 +34,13 @@ class Controller:
             # On crée un point qu'on rajoute à point_data
             pos_x, pos_y = event.x, event.y
             var_t = round(self.videoPlayer.get_playback_time(), 4)
-            new_point = Point(pos_x  / self.point_scale, pos_y / self.point_scale, var_t)
+            new_point = Point(round(pos_x  / self.point_scale, 4), round(pos_y / self.point_scale, 4), var_t)
             self.point_data.append(new_point)
 
             # On avance d'une frame
             self.videoPlayer.move_fwd_frame()
 
-            print(f"Point(x={pos_x}; y={pos_y}; {var_t}s)")
+            print(f"Click on x={pos_x}; y={pos_y}. Point(x={new_point.get_x()}; y={new_point.get_y()}; {var_t}s)")
 
         # Mode échelle (on rajoute deux points pour calculer leur distance
         elif(self.point_mode == PointMode.SetScale):
