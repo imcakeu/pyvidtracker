@@ -21,7 +21,9 @@ class Application(tk.Tk):
         self.width, self.height = self.dimensions
         self.geometry(f"{self.width}x{self.height+50}")
         self.resizable(False, False)
-        self.iconbitmap(self.get_image_file("icon.ico"))
+        
+        #ERREUR --> Chemin d'accès invalide
+        #self.iconbitmap(self.get_image_file("icon.ico"))
 
         # Variables
         self.file_name = file_name
@@ -75,7 +77,7 @@ class Application(tk.Tk):
 
     def get_image_file(self, image_name):
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        video_path = os.path.abspath(os.path.join(script_dir, '..', '..', 'resources', 'images', image_name))
+        video_path = os.path.abspath(os.path.join(script_dir,'..', 'resources', 'images', image_name))
         return video_path
 
     # Affiche une boîte de dialogue d'erreur et affiche l'erreur dans le terminal.
