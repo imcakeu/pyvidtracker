@@ -121,8 +121,11 @@ class VideoPlayer:
                 if ret:
                     return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                 else:
-                    # Notify play_video method that video has ended
+                    # Quand la vidéo se finit, on pause.
                     self.pause = True
+
+                    # Si on est en mode pointage et la vidéo est finie, on propose à l'utilisateur
+                    # de directement sauvegarder.
                     if(self.point_mode == PointMode.Enabled):
                         self.controller.exporter()
                     return (False, None)
@@ -131,7 +134,7 @@ class VideoPlayer:
             return (False, None)
 
 
-    # Joue la vidéo
+    # Joue la vidéo en créant une boucle
     def play_video(self):
         ret, frame = self.get_frame()
         if ret:
@@ -142,7 +145,7 @@ class VideoPlayer:
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
-    # Get the playback time in seconds
+    # Retourne le temps de lecture en secondes
     def get_playback_time(self):
         if self.cap.isOpened():
             playback_msec = self.cap.get(cv2.CAP_PROP_POS_MSEC)
@@ -151,6 +154,9 @@ class VideoPlayer:
         else:
             return None
 
+    # Affiche les graduations (lignes rouges pour l'ordonnée et l'abscisse)
+    # Par défaut si aucune échelle n'est mise en place, l'origine est le centre de la fenêtre.
+    # Sinon c'est le point d'origine défini par l'utilisateur (premier clic)
     def display_grads(self):
         if self.point_mode == PointMode.Enabled:
             window_x, window_y = self.window_x, self.window_y

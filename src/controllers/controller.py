@@ -63,7 +63,7 @@ class Controller:
             new_point = Point(pos_x, pos_y, var_t)
             self.scale_data.append(new_point)
 
-            #
+            # On sauvegarde les données du pointage d'échelle
             self.parent.set_scale(self.scale_data)
 
     # Ouvre une fênetre dialogue pour sauvegarder un fichier
