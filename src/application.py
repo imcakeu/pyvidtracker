@@ -20,6 +20,7 @@ class Application(tk.Tk):
         self.width, self.height = self.dimensions
         self.geometry(f"{self.width}x{self.height+50}")
         self.resizable(False, False)
+        self.iconbitmap("icon.ico")
 
         # Variables
         self.file_name = file_name
