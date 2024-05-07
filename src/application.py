@@ -1,4 +1,5 @@
 import math
+import os
 import tkinter as tk
 from tkinter import simpledialog
 
@@ -20,7 +21,7 @@ class Application(tk.Tk):
         self.width, self.height = self.dimensions
         self.geometry(f"{self.width}x{self.height+50}")
         self.resizable(False, False)
-        self.iconbitmap("icon.ico")
+        self.iconbitmap(self.get_image_file("icon.ico"))
 
         # Variables
         self.file_name = file_name
@@ -71,6 +72,11 @@ class Application(tk.Tk):
         point_distance = math.sqrt( (scale_data[1].get_x() - scale_data[0].get_x())**2 + (scale_data[1].get_y()- scale_data[0].get_y())**2 )
         self.point_scale = point_distance / value
         self.new_player_toggle_point_mode()
+
+    def get_image_file(self, image_name):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        video_path = os.path.abspath(os.path.join(script_dir, '..', '..', 'resources', 'images', image_name))
+        return video_path
 
     # Affiche une boîte de dialogue d'erreur et affiche l'erreur dans le terminal.
     def error_handler(self, error):
